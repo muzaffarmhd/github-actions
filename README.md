@@ -6,11 +6,11 @@ This repository is my learning playground for **GitHub Actions**, where I explor
 ---
 
 ## **Topics Covered**
-1. **Hello World Workflow**  
+1. [**Hello World Workflow**](.github/workflows/ci.yml)  
    - Basic introduction to GitHub Actions.
-2. **Scheduled Workflows**  
+2. [**Scheduled Workflows**](.github/workflows/daily.yml)   
    - Automating tasks with cron expressions.
-3. **Continuous Integration (CI)**  
+3. [**Continuous Integration (CI)**](.github/workflows/ci.yml)   
    - Running tests and builds on push or pull requests.
 
 ## **Topics not yet Covered**
@@ -24,6 +24,4 @@ This repository is my learning playground for **GitHub Actions**, where I explor
 ---
 
 Feel free to explore, experiment, and learn! 😊
-
----
 
