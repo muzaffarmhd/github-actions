@@ -14,10 +14,10 @@ This repository is my learning playground for **GitHub Actions**, where I explor
    - Running tests and builds on push or pull requests.
 4. [**Node Setup**](.github/workflows/nodejs.yml)
    - Running commands to set up the Node.js environment
+5. [**Matrix Builds**](.github/workflows/nodejs-matrix.yml)  
+   - Running workflows across multiple environments.
 
 ## **Topics not yet Covered**
-5. **Matrix Builds**  
-   - Running workflows across multiple environments.
 6. **Secrets Management**  
    - Securing sensitive data in workflows.
 7. **Custom Actions**  
