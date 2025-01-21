@@ -12,13 +12,15 @@ This repository is my learning playground for **GitHub Actions**, where I explor
    - Automating tasks with cron expressions.
 3. [**Continuous Integration (CI)**](.github/workflows/ci.yml)   
    - Running tests and builds on push or pull requests.
+4. [**Node Setup**](.github/workflows/nodejs.yml)
+   - Running commands to set up the Node.js environment
 
 ## **Topics not yet Covered**
-4. **Matrix Builds**  
+5. **Matrix Builds**  
    - Running workflows across multiple environments.
-5. **Secrets Management**  
+6. **Secrets Management**  
    - Securing sensitive data in workflows.
-6. **Custom Actions**  
+7. **Custom Actions**  
    - Creating reusable actions for repetitive tasks.
 
 ---
