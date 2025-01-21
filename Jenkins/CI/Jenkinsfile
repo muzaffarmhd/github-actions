@@ -20,10 +20,20 @@ pipeline {
 
     post {
         success {
-            echo 'Installed successfully'
+            script {
+                def status = currentBuild.result ?: 'SUCCESS'
+                step([$class: 'GitHubCommitStatusSetter', 
+                      contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'Jenkins Build'],
+                      statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', state: status]]]])
+            }
         }
         failure {
-            echo 'Build failed'
-        }
+            script {
+                def status = 'FAILURE'
+                step([$class: 'GitHubCommitStatusSetter', 
+                      contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'Jenkins Build'],
+                      statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', state: status]]]])
+            }
+        } 
     }
 }
