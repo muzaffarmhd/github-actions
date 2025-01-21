@@ -13,9 +13,7 @@ pipeline {
         }
         stage('Install dependencies') {
             steps {
-                dir('../../') {
-                    bat 'npm ci'
-                }
+                bat 'npm ci'
             }
         }  
     }
