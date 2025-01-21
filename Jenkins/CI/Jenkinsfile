@@ -1,20 +1,31 @@
 pipeline {
-    agent any
+    agent {
+        node {
+            label 'nodejs-env'
+        }
+    }
     stages {
-        stage('Build') {
+        stage('Setup'){
             steps {
-                echo 'Building...'
+                cleanWs()
+                checkout scm
             }
         }
-        stage('Test') {
+        stage('Install dependencies') {
             steps {
-                echo 'Running tests...'
+                dir('../../') {
+                    sh 'npm ci'
+                }
             }
+        }  
+    }
+
+    post {
+        success {
+            echo 'Installed successfully'
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
-            }
+        faliure {
+            echo 'Build failed'
         }
     }
 }
