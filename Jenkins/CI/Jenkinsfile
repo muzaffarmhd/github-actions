@@ -4,6 +4,7 @@ pipeline {
             filename 'Dockerfile'
             dir '.'
             label 'nodejs-env'
+            reuseNode true
         }
     }
     stages {
