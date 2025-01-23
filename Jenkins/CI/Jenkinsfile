@@ -3,7 +3,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile'
             dir '.'
-            label 'node-container'
+            label 'nodejs-env'
         }
     }
     stages {
