@@ -1,21 +1,17 @@
 pipeline {
     agent {
-        node {
-            label 'nodejs-env'
+        dockerfile {
+            filename 'Dockerfile.build'
+            dir '.'
+            label 'node-container'
         }
     }
     stages {
-        stage('Setup'){
+        stage('Test') {
             steps {
-                cleanWs()
-                checkout scm
+                echo 'This is a dockerfile test stage'
             }
         }
-        stage('Install dependencies') {
-            steps {
-                bat 'npm ci'
-            }
-        }  
     }
     post {
         success {
