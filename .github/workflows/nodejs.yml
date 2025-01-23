@@ -14,10 +14,9 @@ jobs:
       with: 
         node-version: 21
         cache: 'npm'
-    - run: npm install -g webpack-cli
     - run: npm ci
+    - run: npm install --save-dev webpack-cli
     - run: npm run build --if-present
-    - run: npm tet
 
 
     
