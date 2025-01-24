@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_IMAGE = "muzaffarmhd/helloworld-api"
+        DOCKER_IMAGE = "helloworld-api"
         DOCKER_TAG = "${BUILD_NUMBER}"
         NGROK_AUTH_TOKEN = credentials("ngrok-auth-token")
     }
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker run -d --name muzaffarmhd/helloworld-api -p 3000:3000 ${DOCKER_IMAGE}:${DOCKER_TAG}
+                        docker run -d --name helloworld-api -p 3000:3000 ${DOCKER_IMAGE}:${DOCKER_TAG}
                     """
                     sh """
                         curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
@@ -56,8 +56,8 @@ pipeline {
                       statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', state: status]]]])
             }
             sh '''
-                docker stop muzaffarmhd/helloworld-api || true
-                docker rm muzaffarmhd/helloworld-api || true
+                docker stop helloworld-api || true
+                docker rm helloworld-api || true
                 pkill -f ngrok || true
             '''
         } 
