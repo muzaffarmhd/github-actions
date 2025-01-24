@@ -1,15 +1,41 @@
 pipeline {
-    agent {
-        dockerfile {
-            filename 'Dockerfile'
-            dir '.'
-            reuseNode true
-        }
+    agent any
+    
+    environment {
+        DOCKER_IMAGE = "muzaffarmhd/helloworld-api"
+        DOCKER_TAG = "${BUILD_NUMBER}"
+        NGROK_AUTH_TOKEN = credentials("ngrok-auth-token")
     }
     stages {
-        stage('Test') {
+        stage('Build Image') {
             steps {
-                echo 'This is a dockerfile test stage'
+                script {
+                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                }
+            }
+        }
+
+        stage('Running the Container & NGROK') {
+            steps {
+                script {
+                    sh """
+                        docker run -d --name muzaffarmhd/helloworld-api -p 3000:3000 ${DOCKER_IMAGE}:${DOCKER_TAG}
+                    """
+                    sh """
+                        curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+                        | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+                        && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
+                        | sudo tee /etc/apt/sources.list.d/ngrok.list \
+                        && sudo apt update \
+                        && sudo apt install ngrok
+                    """
+
+                    sh """
+                        ngrok config add-authtoken ${NGROK_AUTH_TOKEN}
+                        #!/bin/bash
+                        nohup ngrok http 3000 
+                    """
+                }
             }
         }
     }
@@ -29,6 +55,11 @@ pipeline {
                       contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'Jenkins Build'],
                       statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', state: status]]]])
             }
+            sh '''
+                docker stop muzaffarmhd/helloworld-api || true
+                docker rm muzaffarmhd/helloworld-api || true
+                pkill -f ngrok || true
+            '''
         } 
     }
 }
